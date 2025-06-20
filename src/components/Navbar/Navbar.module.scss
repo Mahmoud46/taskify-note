@@ -1,0 +1,97 @@
+nav {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+	padding: 1% 2%;
+	.left {
+		display: inherit;
+		gap: 20px;
+		button {
+			display: inherit;
+			span {
+				font-size: 30px;
+				cursor: pointer;
+			}
+			@media (max-width: 550px) {
+				display: none;
+			}
+		}
+	}
+	.right {
+		display: inherit;
+		gap: 20px;
+		@media (max-width: 550px) {
+			gap: 10px;
+		}
+		.search {
+			background: #f5f5f5;
+			display: inherit;
+			gap: 5px;
+			padding: 5px 10px;
+			border-radius: 20px;
+			@media (max-width: 550px) {
+				background: none;
+				padding: 0;
+			}
+			span {
+				font-size: 30px;
+				opacity: 0.5;
+				pointer-events: none;
+				@media (max-width: 550px) {
+					pointer-events: all;
+					cursor: pointer;
+					font-size: 24px;
+					padding: 5px;
+					opacity: 1;
+					border-radius: 50%;
+				}
+			}
+			input {
+				background: none;
+				border: none;
+				outline: none;
+				font-size: 16px;
+				@media (max-width: 550px) {
+					display: none;
+				}
+			}
+		}
+		.user-icon {
+			display: inherit;
+
+			border-radius: 50%;
+			cursor: pointer;
+			img {
+				height: 42px;
+				border-radius: inherit;
+				@media (max-width: 550px) {
+					height: 32px;
+				}
+			}
+		}
+	}
+
+	.float-input {
+		position: absolute;
+		background: #fff;
+		padding: 10px 15px;
+		border-radius: 20px;
+		border: none;
+		outline: none;
+		font-size: 16px;
+		bottom: -100%;
+		width: 100%;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		z-index: 5;
+		left: 0;
+		box-shadow: 0px 8px 5px 0px rgba(0, 0, 0, 0.2);
+		-webkit-box-shadow: 0px 8px 5px 0px rgba(0, 0, 0, 0.2);
+		-moz-box-shadow: 0px 8px 5px 0px rgba(0, 0, 0, 0.2);
+		@media (min-width: 550px) {
+			display: none;
+		}
+	}
+}
