@@ -54,9 +54,16 @@ export default function DataProvider({
 
 	const addNoteToFolder = (folderId: string, noteId: string) => {
 		setFolders((prev) => {
+			const folderIds: string[] = [];
 			prev = prev.map((folder) => {
 				if (folder.id == folderId) folder.notes.reverse().push(noteId);
 				return folder;
+			});
+
+			prev = prev.filter((folder) => {
+				if (folderIds.includes(folder.id)) return false;
+				folderIds.push(folder.id);
+				return true;
 			});
 
 			localStorage.setItem("folders", JSON.stringify(prev));
@@ -112,6 +119,7 @@ export default function DataProvider({
 
 	// Function to remove function from folder
 	const removeNoteFromFolder = (noteId: string, folderId: string) => {
+		const folderIds: string[] = [];
 		setFolders((prev) => {
 			prev = prev.map((folder) => {
 				if (folder.id == folderId) {
@@ -122,6 +130,12 @@ export default function DataProvider({
 				}
 
 				return folder;
+			});
+
+			prev = prev.filter((folder) => {
+				if (folderIds.includes(folder.id)) return false;
+				folderIds.push(folder.id);
+				return true;
 			});
 
 			localStorage.setItem("folders", JSON.stringify(prev));
