@@ -42,6 +42,10 @@ export default function FolderCard({ folder }: { folder: IFolder }): ReactNode {
 						</span>
 					)}
 				</div>
+				<div
+					className={styles.space}
+					onClick={() => navigate(`/folders/${folder.id}`)}
+				></div>
 				<button onClick={() => setIsOpenMenu((prev) => !prev)}>
 					<span className="material-symbols-outlined">more_horiz</span>
 				</button>

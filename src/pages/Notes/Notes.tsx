@@ -26,7 +26,10 @@ export default function Notes(): ReactNode {
 				{location.pathname == "/notes" && <h1>My Notes</h1>}
 				{location.pathname == "/archive" && <h1>Archived Notes</h1>}
 				{location.pathname == "/completed" && <h1>Completed Tasks</h1>}
+				{location.pathname == "/ongoing" && <h1>Ongoing Tasks</h1>}
 				{location.pathname == "/upcoming" && <h1>Upcoming Tasks</h1>}
+				{location.pathname == "/notes/main" && <h1>My Notes</h1>}
+				{location.pathname == "/tasks/main" && <h1>My Tasks</h1>}
 
 				<ul>
 					{noteCategoriesMenuElements.map((category, i) => (
@@ -110,6 +113,46 @@ export default function Notes(): ReactNode {
 											.includes(searchInput.toLowerCase())) &&
 								(filterCategory == "all" || note.favorite) &&
 								archivedDate.includes(note.id)
+						)
+						.map((note, i) => <NoteCard note={note} key={i} />)}
+				{/* Main notes */}
+				{location.pathname == "/notes/main" &&
+					notes
+						.filter(
+							(note) =>
+								note.type == "note" &&
+								(searchInput.trim() == ""
+									? true
+									: note.title
+											.toLowerCase()
+											.includes(searchInput.toLowerCase())) &&
+								(filterCategory == "all" || note.favorite)
+						)
+						.map((note, i) => <NoteCard note={note} key={i} />)}
+				{location.pathname == "/tasks/main" &&
+					notes
+						.filter(
+							(note) =>
+								note.type == "task" &&
+								(searchInput.trim() == ""
+									? true
+									: note.title
+											.toLowerCase()
+											.includes(searchInput.toLowerCase())) &&
+								(filterCategory == "all" || note.favorite)
+						)
+						.map((note, i) => <NoteCard note={note} key={i} />)}
+				{location.pathname == "/ongoing" &&
+					notes
+						.filter(
+							(note) =>
+								note.status == "ongoing" &&
+								(searchInput.trim() == ""
+									? true
+									: note.title
+											.toLowerCase()
+											.includes(searchInput.toLowerCase())) &&
+								(filterCategory == "all" || note.favorite)
 						)
 						.map((note, i) => <NoteCard note={note} key={i} />)}
 

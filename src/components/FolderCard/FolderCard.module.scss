@@ -53,9 +53,10 @@
 	.folder-head {
 		display: flex;
 		width: 100%;
-		justify-content: space-between;
+		// justify-content: space-between;
 		align-items: center;
 		position: relative;
+
 		.icon-cont {
 			animation-delay: 0.5s;
 			position: relative;
@@ -89,6 +90,12 @@
 					color: #fff;
 				}
 			}
+		}
+		.space {
+			display: inherit;
+			flex: 1;
+			height: 60px;
+			cursor: pointer;
 		}
 	}
 

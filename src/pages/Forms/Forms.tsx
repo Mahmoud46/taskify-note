@@ -100,6 +100,7 @@ export const NewFolderForm = (): ReactNode => {
 			notes: [],
 			createdAt: formatted,
 			description: description,
+			createAtDateTime: today.toISOString(),
 		});
 		navigate("/folders");
 	};
@@ -145,6 +146,7 @@ export const NewFolderForm = (): ReactNode => {
 							onChange={(e) => setTitle(e.target.value)}
 							placeholder="Folder Title"
 							required
+							autoFocus={true}
 						/>
 					</div>
 				</header>
@@ -213,6 +215,7 @@ export const NewNoteForm = (): ReactNode => {
 						favorite: false,
 						day: getDayName(date) as TWeekDay,
 						folderId: folderId,
+						createAtDateTime: today.toISOString(),
 					},
 					folderId
 				);
@@ -227,6 +230,7 @@ export const NewNoteForm = (): ReactNode => {
 						content: content,
 						favorite: false,
 						folderId: folderId,
+						createAtDateTime: today.toISOString(),
 					},
 					folderId
 				);
@@ -243,6 +247,7 @@ export const NewNoteForm = (): ReactNode => {
 				status: "upcoming",
 				favorite: false,
 				day: getDayName(date) as TWeekDay,
+				createAtDateTime: today.toISOString(),
 			});
 		else
 			await addNote({
@@ -253,6 +258,7 @@ export const NewNoteForm = (): ReactNode => {
 				icon: icon,
 				content: content,
 				favorite: false,
+				createAtDateTime: today.toISOString(),
 			});
 		if (folderId) navigate(`/folders/${folderId}`);
 		else navigate("/notes");
@@ -319,6 +325,7 @@ export const NewNoteForm = (): ReactNode => {
 							onChange={(e) => setTitle(e.target.value)}
 							placeholder={`${type == "task" ? "Task" : "Note"} Title`}
 							required
+							autoFocus={true}
 						/>
 					</div>
 				</header>
@@ -401,8 +408,9 @@ export const UpdateFolderForm = (): ReactNode => {
 			icon: icon,
 			description: description,
 			updatedAt: formatted,
+			updatedAtDateTime: today.toISOString(),
 		});
-		navigate("/folders");
+		navigate(`/folders/${folder?.id}`);
 	};
 
 	useEffect(() => {
@@ -459,6 +467,7 @@ export const UpdateFolderForm = (): ReactNode => {
 								onChange={(e) => setTitle(e.target.value)}
 								placeholder="Folder Title"
 								required
+								autoFocus={true}
 							/>
 						</div>
 					</header>
@@ -525,8 +534,8 @@ export const UpdateNoteForm = (): ReactNode => {
 				content: content,
 				date: date.split("-").reverse().join("/"),
 				time: convertTo12Hour(time),
-
 				day: getDayName(date) as TWeekDay,
+				updatedAtDateTime: today.toISOString(),
 			});
 		else
 			await updateNote(id as string, {
@@ -536,7 +545,7 @@ export const UpdateNoteForm = (): ReactNode => {
 				updatedAt: formatted,
 			});
 
-		navigate("/notes");
+		navigate(`/notes/${note?.id}`);
 	};
 
 	useEffect(() => {
@@ -612,6 +621,7 @@ export const UpdateNoteForm = (): ReactNode => {
 									onChange={(e) => setTitle(e.target.value)}
 									placeholder={`${note.type == "task" ? "Task" : "Note"} Title`}
 									required
+									autoFocus={true}
 								/>
 							</div>
 						</header>

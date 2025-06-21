@@ -6,6 +6,8 @@ export interface IFolder {
 	notes: string[]; // Contians all notes ids related to the folder
 	description?: string;
 	updatedAt?: string;
+	updatedAtDateTime?: string;
+	createAtDateTime?: string;
 }
 
 export interface INote {
@@ -23,6 +25,8 @@ export interface INote {
 	day?: TWeekDay;
 	folderId?: string;
 	updatedAt?: string;
+	updatedAtDateTime?: string;
+	createAtDateTime?: string;
 }
 
 export type TTaskStatus = "upcoming" | "ongoing" | "completed" | "cancelled";

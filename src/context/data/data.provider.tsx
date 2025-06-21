@@ -16,9 +16,14 @@ export default function DataProvider({
 	// Function to add Folder
 	const addFolder = async (folder: IFolder) => {
 		setFolders((prev) => {
-			prev = prev.reverse();
-			prev.push(folder);
-			prev = prev.reverse();
+			const folderIds: string[] = [];
+			prev = [folder, ...prev];
+			prev = prev.filter((folder) => {
+				if (folderIds.includes(folder.id)) return false;
+				folderIds.push(folder.id);
+				return true;
+			});
+
 			localStorage.setItem("folders", JSON.stringify(prev));
 			return prev;
 		});
@@ -31,11 +36,19 @@ export default function DataProvider({
 		update: { [P in K]: IFolder[P] }
 	) => {
 		setFolders((prev) => {
+			const folderIds: string[] = [];
 			prev = prev.map((folder) => {
 				if (folder.id == id) folder = { ...folder, ...update };
 				return folder;
 			});
-			prev = [...new Set(prev)];
+
+			// Remove duplications
+			prev = prev.filter((folder) => {
+				if (folderIds.includes(folder.id)) return false;
+				folderIds.push(folder.id);
+				return true;
+			});
+
 			localStorage.setItem("folders", JSON.stringify(prev));
 			return prev;
 		});
@@ -75,6 +88,7 @@ export default function DataProvider({
 	const addNote = async (note: INote, folderId?: string) => {
 		setNotes((prev) => {
 			prev = [note, ...prev];
+
 			localStorage.setItem("notes", JSON.stringify(prev));
 			return prev;
 		});
@@ -92,6 +106,7 @@ export default function DataProvider({
 			prev = prev.map((note) =>
 				note.id === id ? { ...note, ...update } : note
 			);
+
 			localStorage.setItem("notes", JSON.stringify(prev));
 			return prev;
 		});
@@ -144,7 +159,7 @@ export default function DataProvider({
 	};
 
 	// Function to remove note
-	const removeNote = async (id: string, folderId?: string) => {
+	const removeNote = async (id: string, folderId?: string, flag?: boolean) => {
 		setNotes((prev) => {
 			prev = prev.filter((note) => note.id != id);
 			localStorage.setItem("notes", JSON.stringify(prev));
@@ -152,12 +167,21 @@ export default function DataProvider({
 		});
 		if (archivedDate.includes(id)) updateArchivedData("remove", id);
 		if (folderId) removeNoteFromFolder(id, folderId);
-		toast.success("Note deleted sucessfully");
+		if (!flag) toast.success("Note deleted sucessfully");
+	};
+
+	const removeNotesForFolder = (folderId: string) => {
+		const folderIndex = folders.findIndex((folder) => folder.id == folderId);
+		if (folderIndex != -1)
+			folders[folderIndex].notes.map((noteId) =>
+				removeNote(noteId, folderId, true)
+			);
 	};
 
 	// Function to remove folder
 	const removeFolder = async (id: string) => {
 		setFolders((prev) => {
+			removeNotesForFolder(id);
 			prev = prev.filter((folder) => folder.id != id);
 			localStorage.setItem("folders", JSON.stringify(prev));
 			return prev;

@@ -31,10 +31,13 @@ function App(): ReactNode {
 
 					<Route path="/upcoming" element={<Notes />} />
 					<Route path="/completed" element={<Notes />} />
+					<Route path="/ongoing" element={<Notes />} />
 
 					<Route path="/folders" element={<Folders />} />
 					<Route path="/folders/:id" element={<Folder />} />
 					<Route path="/notes" element={<Notes />} />
+					<Route path="/notes/main" element={<Notes />} />
+					<Route path="/tasks/main" element={<Notes />} />
 					<Route path="/notes/:id" element={<Note />} />
 
 					<Route path="/archive" element={<Notes />} />

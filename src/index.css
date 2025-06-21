@@ -97,3 +97,9 @@ button {
 	--status-color: rgba(253, 224, 71, 0.6);
 	animation: beat 1.4s infinite ease-in-out;
 }
+
+.react-calendar__tile--now {
+	background-color: #000 !important;
+	color: white !important;
+	border-radius: 8px;
+}

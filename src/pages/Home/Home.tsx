@@ -105,11 +105,11 @@ function RecentNotes(): ReactNode {
 		<>
 			<h1>Recent Notes</h1>
 
-			<ul>
+			{/* <ul>
 				<li className={styles.active}>Today</li>
 				<li>This Week</li>
 				<li>This Month</li>
-			</ul>
+			</ul> */}
 
 			<div className={styles["list-cont"]}>
 				<div className={styles["list-cont-sm"]}>
