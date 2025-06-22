@@ -43,6 +43,21 @@
 		}
 	}
 
+	.my-chart {
+		grid-column: span 3;
+		grid-row: span 3;
+		background: #fff;
+		border-radius: 10px;
+		padding: 10px;
+		font-size: 12px;
+		@media (max-width: 550px) {
+			grid-column: span 2;
+			height: 300px;
+		}
+		@media (max-width: 950px) {
+			height: 300px;
+		}
+	}
 	.calendar-container {
 		border: none;
 		grid-column: span 2;
@@ -58,6 +73,32 @@
 			margin: 2px auto 0;
 			background-color: teal;
 			border-radius: 50%;
+		}
+	}
+
+	.clock {
+		background: #fff;
+		grid-row: span 3;
+		border-radius: 10px;
+		padding: 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+
+		small {
+			align-self: flex-end;
+			font-weight: 600;
+			margin-bottom: 5px;
+		}
+		p {
+			&.time {
+				font-size: 90px;
+				margin-top: -30px;
+			}
+			&.day {
+				font-weight: 600;
+				font-size: 20px;
+			}
 		}
 	}
 }

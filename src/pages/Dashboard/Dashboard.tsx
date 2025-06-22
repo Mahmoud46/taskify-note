@@ -2,6 +2,14 @@ import { useContext, useEffect, useState, type ReactNode } from "react";
 import styles from "./Dashboard.module.scss";
 import { DataContext } from "../../context/data/data.context";
 import type { IDataContext, ISettingsContext } from "../../interface/Context";
+import {
+	LineChart,
+	Line,
+	XAxis,
+	Tooltip,
+	Legend,
+	ResponsiveContainer,
+} from "recharts";
 
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -42,6 +50,79 @@ function MyCalendar({ events }: { events: Event[] }): ReactNode {
 	);
 }
 
+function Clock(): ReactNode {
+	const [hours, setHours] = useState<string>("");
+	const [minutes, setMinutes] = useState<string>("");
+	const [ampm, setAmpm] = useState<string>("");
+	const [date, setDate] = useState<string>("");
+	const { getDayName } = useContext(SettingsContext) as ISettingsContext;
+
+	const updateTime = () => {
+		const now = new Date();
+		let hours = now.getHours();
+		const minutes = String(now.getMinutes()).padStart(2, "0");
+
+		const ampm = hours >= 12 ? "PM" : "AM";
+		hours = hours % 12 || 12; // Convert 0 to 12
+		const hoursStr = String(hours).padStart(2, "0");
+
+		setHours(hoursStr);
+		setMinutes(minutes);
+		setAmpm(ampm);
+		setDate(
+			`${now.getFullYear()}-${(now.getMonth() + 1)
+				.toString()
+				.padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")}`
+		);
+	};
+	useEffect(() => {
+		const interval = setInterval(updateTime, 1000);
+		updateTime();
+		return () => clearInterval(interval);
+	}, []);
+	return (
+		<div className={styles.clock}>
+			<small>{ampm}</small>
+			<p className={styles.time}>{hours}</p>
+			<p className={styles.time}>{minutes}</p>
+			<p className={styles.day}>{getDayName(date)}</p>
+			<p>{date.split("-").reverse().join("/")}</p>
+		</div>
+	);
+}
+
+function MyChart({ events }: { events: Record<string, number> }) {
+	const data: { date: string; count: number }[] = Object.entries(events).map(
+		([key, value]) => ({ date: key, count: value })
+	);
+
+	return (
+		<div className={styles["my-chart"]}>
+			<ResponsiveContainer width="100%" height="100%" className={styles.chart}>
+				<LineChart data={data}>
+					<XAxis
+						dataKey="date"
+						angle={-45}
+						textAnchor="end"
+						interval={0}
+						tick={{
+							fontSize: 10,
+						}}
+					/>
+					<Tooltip />
+					<Legend />
+					<Line
+						type="monotone"
+						dataKey="count"
+						stroke="#8884d8"
+						name="Total Items (Notes and Tasks)"
+					/>
+				</LineChart>
+			</ResponsiveContainer>
+		</div>
+	);
+}
+
 export default function Dashboard(): ReactNode {
 	const [foldersCount, setFoldersCount] = useState<number>(0);
 	const [notesCount, setNotesCount] = useState<number>(0);
@@ -50,7 +131,7 @@ export default function Dashboard(): ReactNode {
 	const [ongoingCount, setOngoingCount] = useState<number>(0);
 	const [completedCount, setCompletedCount] = useState<number>(0);
 	const [events, setEvents] = useState<Event[]>([]);
-
+	const [dateItem, setDateItem] = useState<Record<string, number>>({});
 	const { folders, notes } = useContext(DataContext) as IDataContext;
 	const { navigate } = useContext(SettingsContext) as ISettingsContext;
 
@@ -75,6 +156,21 @@ export default function Dashboard(): ReactNode {
 					title: note.title,
 				}))
 		);
+		const eventsCount: Record<string, number> = {};
+
+		notes.map((note) => {
+			if (
+				!eventsCount[note.date ?? note.updatedAt ?? (note.createdAt as string)]
+			)
+				eventsCount[
+					note.date ?? note.updatedAt ?? (note.createdAt as string)
+				] = 0;
+			eventsCount[
+				note.date ?? note.updatedAt ?? (note.createdAt as string)
+			] += 1;
+		});
+
+		setDateItem(eventsCount);
 	}, [folders, notes]);
 
 	return (
@@ -191,6 +287,22 @@ export default function Dashboard(): ReactNode {
 						</h2>
 					</div>
 				</div>
+				<div className={styles.count}>
+					<span className={`material-symbols-outlined ${styles.icon}`}>
+						vital_signs
+					</span>
+					<div className={styles.details}>
+						<div className={styles.head}>
+							<p>Performance </p>
+						</div>
+						<h2>
+							{(tasksCount / Object.keys(dateItem).length).toFixed(1)}{" "}
+							<small title="task per day">t/d</small>
+						</h2>
+					</div>
+				</div>
+				<MyChart events={dateItem} />
+				<Clock />
 				<MyCalendar events={events} />
 			</div>
 		</section>
