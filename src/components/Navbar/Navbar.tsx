@@ -6,9 +6,8 @@ import userIcon from "../../assets/user_icon.jpg";
 
 export default function Navbar(): ReactNode {
 	const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
-	const { isMenuOpen, setIsMenuOpen, searchInput, setSearchInput } = useContext(
-		SettingsContext
-	) as ISettingsContext;
+	const { isMenuOpen, setIsMenuOpen, searchInput, setSearchInput, navigate } =
+		useContext(SettingsContext) as ISettingsContext;
 
 	return (
 		<nav>
@@ -27,7 +26,7 @@ export default function Navbar(): ReactNode {
 						{isMenuOpen ? "close" : "menu"}
 					</span>
 				</button>
-				<h1>Taskify</h1>
+				<h1 onClick={() => navigate("/")}>Taskify.nt</h1>
 			</div>
 			<div className={styles.right}>
 				<div className={styles.search}>
