@@ -296,7 +296,10 @@ export default function Dashboard(): ReactNode {
 							<p>Performance </p>
 						</div>
 						<h2>
-							{(tasksCount / Object.keys(dateItem).length).toFixed(1)}{" "}
+							{(
+								(tasksCount + notesCount) /
+								Object.keys(dateItem).length
+							).toFixed(1)}{" "}
 							<small title="task per day">t/d</small>
 						</h2>
 					</div>
