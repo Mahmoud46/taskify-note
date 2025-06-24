@@ -55,6 +55,8 @@ export default function FolderCard({ folder }: { folder: IFolder }): ReactNode {
 				onClick={() => navigate(`/folders/${folder.id}`)}
 			>
 				<p>{folder.title}</p>
+
+				<p>{new Set(folder.notes).size} Items</p>
 				<p>{folder.updatedAt ? folder.updatedAt : folder.createdAt}</p>
 			</div>
 		</div>

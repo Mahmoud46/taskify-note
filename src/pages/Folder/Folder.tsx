@@ -96,6 +96,7 @@ export default function Folder(): ReactNode {
 					{folder.description && folder.description.trim() != "" && (
 						<p dangerouslySetInnerHTML={{ __html: folder.description }}></p>
 					)}
+					<p>{new Set(folder.notes).size} Items</p>
 					<div className={styles.content}>
 						<div className={styles["content-header"]}>
 							<div className={styles.left}>

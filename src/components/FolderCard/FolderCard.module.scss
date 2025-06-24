@@ -108,14 +108,13 @@
 		padding-left: 10px;
 		cursor: pointer;
 		p {
+			font-size: 12px;
 			&:first-child {
 				display: -webkit-box;
 				-webkit-line-clamp: 1; /* number of lines to show */
 				-webkit-box-orient: vertical;
 				overflow: hidden;
-			}
-			&:last-child {
-				font-size: 12px;
+				font-size: 20px;
 			}
 		}
 	}

@@ -69,7 +69,9 @@ export default function DataProvider({
 		setFolders((prev) => {
 			const folderIds: string[] = [];
 			prev = prev.map((folder) => {
-				if (folder.id == folderId) folder.notes.reverse().push(noteId);
+				if (folder.id == folderId) {
+					return { ...folder, notes: [noteId, ...folder.notes] };
+				}
 				return folder;
 			});
 

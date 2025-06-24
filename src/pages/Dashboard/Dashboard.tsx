@@ -123,6 +123,19 @@ function MyChart({ events }: { events: Record<string, number> }) {
 	);
 }
 
+function sortRecordWithDate(
+	data: Record<string, number>
+): Record<string, number> {
+	const sortedEntries = Object.entries(data).sort(([a], [b]) => {
+		const parseDate = (s: string) => {
+			const [day, month, year] = s.split("/").map(Number);
+			return new Date(year, month - 1, day);
+		};
+		return parseDate(a).getTime() - parseDate(b).getTime();
+	});
+	return Object.fromEntries(sortedEntries);
+}
+
 export default function Dashboard(): ReactNode {
 	const [foldersCount, setFoldersCount] = useState<number>(0);
 	const [notesCount, setNotesCount] = useState<number>(0);
@@ -170,7 +183,7 @@ export default function Dashboard(): ReactNode {
 			] += 1;
 		});
 
-		setDateItem(eventsCount);
+		setDateItem(sortRecordWithDate(eventsCount));
 	}, [folders, notes]);
 
 	return (
