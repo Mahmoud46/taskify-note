@@ -169,6 +169,16 @@ export default function DataProvider({
 		});
 		if (archivedDate.includes(id)) updateArchivedData("remove", id);
 		if (folderId) removeNoteFromFolder(id, folderId);
+		setFolders((prev) =>
+			prev.map((folder) => {
+				if (folder.notes.includes(id))
+					return {
+						...folder,
+						notes: [...folder.notes.filter((noteId) => noteId != id)],
+					};
+				return folder;
+			})
+		);
 		if (!flag) toast.success("Note deleted sucessfully");
 	};
 

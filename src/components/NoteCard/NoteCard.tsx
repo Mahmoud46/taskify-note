@@ -185,8 +185,8 @@ export default function NoteCard({ note }: { note: INote }): ReactNode {
 				<div
 					className={styles.content}
 					dangerouslySetInnerHTML={{
-						__html: `${note.content.slice(0, 250)} ${
-							note.content.length > 250 ? "..." : ""
+						__html: `${note.content.slice(0, 100)} ${
+							note.content.length > 100 ? "..." : ""
 						}`,
 					}}
 					onClick={() => {
