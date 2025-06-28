@@ -40,3 +40,7 @@ export type TWeekDay =
 	| "Sunday";
 
 export type TNoteCategory = "personal" | "learning" | "event" | "work";
+
+export interface INoteWithPriority extends INote {
+	priority: number;
+}

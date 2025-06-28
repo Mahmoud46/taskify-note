@@ -6,6 +6,7 @@ import type { IDataContext, ISettingsContext } from "../../interface/Context";
 import NoteCard from "../../components/NoteCard/NoteCard";
 import { DataContext } from "../../context/data/data.context";
 import type { IFolder } from "../../interface/Data";
+import { sortNotes } from "../../utils/sort";
 const filterCategory = [
 	{ title: "All", value: "all" },
 	{ title: "Recent", value: "recent" },
@@ -118,7 +119,7 @@ function RecentNotes(): ReactNode {
 							notes.length > 2 ? styles.hidden : styles.auto
 						}`}
 					>
-						{notes
+						{sortNotes(notes)
 							.filter((note) => !archivedDate.includes(note.id))
 							.slice(0, 3)
 							.map((folder, i) => (

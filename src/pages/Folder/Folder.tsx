@@ -6,6 +6,7 @@ import type { IDataContext, ISettingsContext } from "../../interface/Context";
 import styles from "./Folder.module.scss";
 import SettingsContext from "../../context/settings/settings.context";
 import NoteCard from "../../components/NoteCard/NoteCard";
+import { sortNotes } from "../../utils/sort";
 
 const notesTypes = [
 	{ name: "All", value: "all" },
@@ -124,7 +125,7 @@ export default function Folder(): ReactNode {
 
 						<div className={styles["folder-notes"]}>
 							{folder.notes.length > 0 &&
-								notes
+								sortNotes(notes)
 									.filter(
 										(note) =>
 											folder.notes.includes(note.id) &&

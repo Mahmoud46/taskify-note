@@ -5,6 +5,7 @@ import type { IDataContext, ISettingsContext } from "../../interface/Context";
 import { DataContext } from "../../context/data/data.context";
 import { useLocation } from "react-router-dom";
 import SettingsContext from "../../context/settings/settings.context";
+import { sortNotes } from "../../utils/sort";
 
 const noteCategoriesMenuElements = [
 	{ name: "All", value: "all" },
@@ -54,7 +55,7 @@ export default function Notes(): ReactNode {
 			</header>
 			<div className={styles["notes-cont"]}>
 				{location.pathname == "/notes" &&
-					notes
+					sortNotes(notes)
 						.filter(
 							(note) =>
 								(searchInput.trim() == ""
@@ -69,7 +70,7 @@ export default function Notes(): ReactNode {
 
 				{/* Upcoming tasks */}
 				{location.pathname == "/upcoming" &&
-					notes
+					sortNotes(notes)
 						.filter(
 							(note) =>
 								(filterCategory == "all" || note.favorite) &&
@@ -86,7 +87,7 @@ export default function Notes(): ReactNode {
 
 				{/* Completed tasks */}
 				{location.pathname == "/completed" &&
-					notes
+					sortNotes(notes)
 						.filter(
 							(note) =>
 								(searchInput.trim() == ""
@@ -103,7 +104,7 @@ export default function Notes(): ReactNode {
 
 				{/* Archived notes */}
 				{location.pathname == "/archive" &&
-					notes
+					sortNotes(notes)
 						.filter(
 							(note) =>
 								(searchInput.trim() == ""
@@ -117,7 +118,7 @@ export default function Notes(): ReactNode {
 						.map((note, i) => <NoteCard note={note} key={i} />)}
 				{/* Main notes */}
 				{location.pathname == "/notes/main" &&
-					notes
+					sortNotes(notes)
 						.filter(
 							(note) =>
 								note.type == "note" &&
@@ -130,7 +131,7 @@ export default function Notes(): ReactNode {
 						)
 						.map((note, i) => <NoteCard note={note} key={i} />)}
 				{location.pathname == "/tasks/main" &&
-					notes
+					sortNotes(notes)
 						.filter(
 							(note) =>
 								note.type == "task" &&
@@ -143,7 +144,7 @@ export default function Notes(): ReactNode {
 						)
 						.map((note, i) => <NoteCard note={note} key={i} />)}
 				{location.pathname == "/ongoing" &&
-					notes
+					sortNotes(notes)
 						.filter(
 							(note) =>
 								note.status == "ongoing" &&
