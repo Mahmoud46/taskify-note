@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
+import { useContext, useEffect, type ReactNode } from "react";
 import Navbar from "./components/Navbar/Navbar";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Folders from "./pages/Folders/Folders";
@@ -16,8 +16,16 @@ import {
 } from "./pages/Forms/Forms";
 import { Toaster } from "react-hot-toast";
 import BottomMenubar from "./components/Bottombar/BottomMenubar";
+// import SettingsContext from "./context/settings/settings.context";
+// import type { ISettingsContext } from "./interface/Context";
 
 function App(): ReactNode {
+	// const { navigate } = useContext(SettingsContext) as ISettingsContext;
+
+	// useEffect(() => {
+	// 	navigate("/");
+	// }, []);
+
 	return (
 		<main>
 			<Toaster />
@@ -47,6 +55,8 @@ function App(): ReactNode {
 					<Route path="/new-note/:folderId" element={<NewNoteForm />} />
 					<Route path="/note/update/:id" element={<UpdateNoteForm />} />
 					<Route path="/folder/update/:id" element={<UpdateFolderForm />} />
+
+					<Route path="*" element={<Navigate to="/" replace />} />
 				</Routes>
 			</div>
 		</main>
