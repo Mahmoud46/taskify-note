@@ -1,4 +1,4 @@
-import { useContext, useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
@@ -16,16 +16,9 @@ import {
 } from "./pages/Forms/Forms";
 import { Toaster } from "react-hot-toast";
 import BottomMenubar from "./components/Bottombar/BottomMenubar";
-import SettingsContext from "./context/settings/settings.context";
-import type { ISettingsContext } from "./interface/Context";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App(): ReactNode {
-	const { navigate } = useContext(SettingsContext) as ISettingsContext;
-
-	useEffect(() => {
-		navigate("/");
-	}, []);
-
 	return (
 		<main>
 			<Toaster />
@@ -55,6 +48,8 @@ function App(): ReactNode {
 					<Route path="/new-note/:folderId" element={<NewNoteForm />} />
 					<Route path="/note/update/:id" element={<UpdateNoteForm />} />
 					<Route path="/folder/update/:id" element={<UpdateFolderForm />} />
+
+					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</div>
 		</main>
